@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-12 text-center mb-4">
+                <h1>
+                    Liste des films
+                </h1>
+            </div>
+        </div>
+        <div class="row d-flex flex-row align-items-center mb-4">
+                <form class=" d-flex flex-row gap-2 col-8" action="../../index.php" method="post">
+                    <div class="col-4">
+                        <input type="text" class="form-control" placeholder="Nom du film" name="filmName"
+                               aria-label="Nom du film">
+                    </div>
+                    <div class="col-2">
+                        <select class="form-select bg-outline-dark" name="filmType" aria-label="Default select example">
+                            <option selected>Genre</option>
+                            {% for type in types %}
+                                <option value="{{ type.type }}">{{ type.type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-dark">Rechercher</button>
+                    </div>
+                </form>
+                <div class="col-4 text-end">
+                    <a class="btn btn-primary" href="/?page=form">Ajouter un film</a>
+                </div>
+            </div>
+        </div>
+        {% if error == 'true'  %}
+            <div class="text-center mb-3">
+                <div class="fw-bold fs-3 text-danger">Aucun résultat trouvé !</div>
+            </div>
+        {% endif %}
+
+        <table class="table table-light table-striped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for film in films %}
+                {% include 'partials/table/tableFilms.html.twig' with {'entity': film} %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+{% endblock body %}
